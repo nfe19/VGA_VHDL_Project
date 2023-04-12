@@ -14,7 +14,7 @@ entity VGA_Controller is
 		  redSwitch, greenSwitch, blueSwitch: in std_logic;
 		  pixelClk: buffer std_logic;
 		  hSync, vSync: buffer std_logic;
-		  R, G, B: out std_logic_vector(9 downto 0);
+		  VGA_R, VGA_G, VGA_B: out std_logic_vector(9 downto 0);
 		  nblank, nsync: out std_logic);
 end entity;
 
@@ -95,28 +95,20 @@ end process;
 
 ------------------------ Image Generator ------------------------
 process(hSync, vSync, vActive, dena, redSwitch, greenSwitch, blueSwitch)
-	--variable lineCounter: integer range 0 to vc;
 
 begin
 
-	--if(vSync='0') then
-	--	lineCounter := 0;
-	--elsif(rising_edge(hSync)) then
-	--	if(vActive='1') then
-	--		lineCounter := line_counter+1;
-	--	end if;
-	--end if;
 	
 	--main control
 	if (dena='1') then
-		R <= (others => redSwitch);
-		G <= (others => greenSwitch);
-		B <= (others => blueSwitch);
+		VGA_R <= (others => redSwitch);
+		VGA_G <= (others => greenSwitch);
+		VGA_B <= (others => blueSwitch);
 
 	else
-		R <= (others => '0');
-		G <= (others => '0');
-		B <= (others => '0');
+		VGA_R <= (others => '0');
+		VGA_G <= (others => '0');
+		VGA_B <= (others => '0');
 	end if;
 end process;
 
